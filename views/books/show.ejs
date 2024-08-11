@@ -1,0 +1,17 @@
+<%layout('layouts/boilerplate') %>
+
+<ol>
+
+<%for(let i=0;i<books.length;i++){ %>
+        
+        <li>
+            <h2>Title:<%=books[i].Title %></h2>
+            <h4>Author:<%=books[i].Author %></h4>
+            <h4>Year Published:<%=books[i].Year_Of_Publication %></h4>
+            <h4>Topic:<%=books[i].Topic %></h4>
+            <h4>Price:$<%=books[i].Price %></h4>
+        </li>
+
+<%}%>
+
+</ol>
