@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const books = require("./books");
-const booksSchema = require("../models/booksSchema");
+const bookModel = require("../models/booksSchema");
 
 mongoose.connect('mongodb://localhost:27017/Books_List', {
     useNewUrlParser: true,
@@ -17,7 +17,7 @@ db.once("open", () => {
 const seedDB = async()=>{
     await booksSchema.deleteMany({});
     for(let i = 0;i<books.length;i++){
-        const newBook = new booksSchema({
+        const newBook = new bookModel({
             Title:`${books[i].Title}`,
             Author:`${books[i].Author}`,
             Year_Of_Publication :`${books[i].Year_Of_Publication}`,
