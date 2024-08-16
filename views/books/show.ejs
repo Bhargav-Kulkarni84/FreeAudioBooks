@@ -16,7 +16,17 @@
 <h4>Price:$<%=books.Price %></h4>
                 
 <div>
-    <h2><a href="/books">Go To Books Page</a></h2>
+    
+    <form action="/books/<%=books.id%>?_method=DELETE" method="POST">
+    
+
+        <button type="submit">Delete Book</button>
+    </form>
+        
+<div>
+    <h4><a href="/books/edit/<%=books.id%>">Edit</a></h4>
 </div>
 
+    <h5><a href="/books">Go To Books Page</a></h5>
+</div>
 

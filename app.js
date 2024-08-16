@@ -5,6 +5,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 const ejsMate = require('ejs-mate');
 const bookModel = require('./models/booksSchema');
+const methodOverride = require('method-override');
 
 //Database Connection
 mongoose.connect('mongodb://localhost:27017/Books_List', {
@@ -27,9 +28,9 @@ app.set('view engine','ejs');
 // app.set('views',path.join(__dirname));
 app.set('views', path.join(__dirname, 'views'))
 
-// Used for rendering form data
-
+// Used for rendering form data it will parse the content encoded in the url
 app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride('_method'));
 
 //get routes
 
@@ -49,19 +50,58 @@ app.get('/books',async (req,res)=>{
 app.get('/books/new',async(req,res)=>{
     res.render('books/new');
 })
-
-app.get('/books/data',async(req,res)=>{
-    // const {Title,Author,Year,Topic,Price} = req.query //getting data from query
-    const {Title,Author,Year,Topic,Price} = req.body; //getting data from body passed 
-    res.render('books/data',{Title,Author,Year,Topic,Price})
+    
+app.get('/books/edit/:id',async(req,res)=>{
+    const id = req.params.id;
+    // const {id} = req.params;
+    const books = await bookModel.findById(id);
+    res.render('books/edit',{books});   
 })
+
+//Put Routes
+
+app.put('/books/edit/:id',async(req,res)=>{
+    // const id = req.params.id; 
+    console.log("Post Route");
+    const {id} = req.params;
+    const {Title,Author,Year,Topic,Price} = req.body;
+   const book = await bookModel.findByIdAndUpdate(id,{
+        Title,
+        Author,
+        Year_Of_Publication:Year,
+        Topic,
+        Price
+    });
+    res.redirect(`/books/${book._id}`);
+});
+
+// Post routes
 
 app.post('/books/new',async(req,res)=>{
     const body = req.body;
     // res.redirect(`/books/data?Title=${body.title}&Author=${body.Author}&Year=${body.Year}&Topic=${body.Topic}&Price=${body.Price}`) //sending data in terms of query string.
-    res.render('books/data', { Title: body.Title, Author: body.Author, Year: body.Year, Topic: body.Topic, Price: body.Price }); //sending data as the body.
+    // res.render('books/data', { Title: body.Title, Author: body.Author, Year: body.Year, Topic: body.Topic, Price: body.Price }); //sending data as the body.
+    //Adding the new books to the database
+
+    const {Title,Author,Year,Topic,Price} = req.body;
+    const newBook = new bookModel({
+            Title,
+            Author,
+            Year_Of_Publication:`${Year}`,
+            Topic,
+            Price
+    })
+    newBook.save();
+    res.redirect('/books');
 })
 
+//Delete Routes
+
+app.delete('/books/:id', async (req, res) => {
+    const id = req.params.id;
+    await bookModel.findByIdAndDelete(id);
+    res.redirect('/books');
+});
 
 app.get('/books/:id',async(req,res)=>{
 
@@ -69,7 +109,6 @@ app.get('/books/:id',async(req,res)=>{
     // res.render('books/show',{books});
     res.render('books/show',{books});
 })
-
 
 //Connection to the server
 app.listen(3000,()=>{
