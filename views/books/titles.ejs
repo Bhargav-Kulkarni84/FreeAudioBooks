@@ -1,0 +1,20 @@
+<%layout('/layouts/boilerplate')%>
+
+<h3>Title of the books</h3>
+
+<ol>
+    
+    <%for(let i=0;i<books.length;i++){ %>
+            
+            <h4>
+                <li>
+                    <!-- <h4><a href="<%=books[i].Title %>"></a></h4> -->
+                    <% const id = books[i].id %>
+                    <a href="/books/<%=id%>"><h4><%=books[i].Title %></h4></a>
+
+                </li>
+            </h4>
+    
+    <%}%>
+    
+</ol>
