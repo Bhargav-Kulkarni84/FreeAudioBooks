@@ -1,17 +1,32 @@
-<%layout('layouts/boilerplate') %>
+<%layout('layouts/boilerplate')%>
 
-<ol>
+<br>
+<h1><%=books.Title%></h1>
 
-<%for(let i=0;i<books.length;i++){ %>
+<br>
+
+<br>
+
+<h3>Details:</h3>
+<br>
+
+<h4>Author:<%=books.Author %></h4> 
+<h4>Year Published:<%=books.Year_Of_Publication %></h4>
+<h4>Topic:<%=books.Topic %></h4>
+<h4>Price:$<%=books.Price %></h4>
+                
+<div>
+    
+    <form action="/books/<%=books.id%>?_method=DELETE" method="POST">
+    
+
+        <button type="submit">Delete Book</button>
+    </form>
         
-        <li>
-            <h2>Title:<%=books[i].Title %></h2>
-            <h4>Author:<%=books[i].Author %></h4>
-            <h4>Year Published:<%=books[i].Year_Of_Publication %></h4>
-            <h4>Topic:<%=books[i].Topic %></h4>
-            <h4>Price:$<%=books[i].Price %></h4>
-        </li>
+<div>
+    <h4><a href="/books/edit/<%=books.id%>">Edit</a></h4>
+</div>
 
-<%}%>
+    <h5><a href="/books">Go To Books Page</a></h5>
+</div>
 
-</ol>
