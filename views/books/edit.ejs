@@ -1,38 +1,70 @@
 <%layout('layouts/boilerplate')%>
 
-<form action="/books/edit/<%=books.id%>?_method=PUT" method="POST">
+<div class="container">
+
+  <form action="/books/edit/<%=books.id%>?_method=PUT" method="POST">
     
-    <div>
-    <label for="Title">Title:</label>
-    <input type="text" id="Title" name="Title" value="<%=books.Title%>" >
-    </div>
-    
-    <div>
-    <label for="Author">Authors:</label>
-    <input type="text" id="Author" name="Author" value="<%=books.Author%>">
+    <div class="col-3 row mt-3 mb-3">
+    <label class="form-label" for="Title">Title:</label>
+    <input class="form-control" type="text" id="Title" name="Title" value="<%=books.Title%>" required >
     </div>
     
-    <div>
-    <label for="Year">Year_Of_Publication:</label>
-    <input type="text" id="Year" name="Year" value="<%=books.Year_Of_Publication%>">
+    <div class="col-3 row mt-3 mb-3">
+    <label class="form-label" for="Image">Image URL:</label>
+    <input class="form-control" type="text" id="Image" name="Image" value="<%=books.Image%>" required>
+    </div>
+
+    <div class="col-3 row mt-3 mb-3">
+    <label class="form-label" for="Author">Authors:</label>
+    <input class="form-control" type="text" id="Author" name="Author" value="<%=books.Author%>" required>
     </div>
     
-    <div>
-    <label for="Topic">Topic:</label>
-    <input type="text" id="Topic" name="Topic" value="<%=books.Topic%>">
+    <div class="col-3 row mt-3 mb-3">
+    <label class="form-label" for="Year">Year_Of_Publication:</label>
+    <input class="form-control" type="text" id="Year" name="Year" value="<%=books.Year_Of_Publication%>" required>
+    </div>
+    
+    <div class="col-3 row mt-3 mb-3">
+    <label class="form-label" for="Topic">Topic:</label>
+    <input class="form-control" type="text" id="Topic" name="Topic" value="<%=books.Topic%>" required>
     </div>
 
-    <div>
-    <label for="Price">$Price:</label>
-    <input type="text" id="Price" name="Price" value="<%=books.Price%>">
+    <div class="col-3 row mt-3 mb-3">
+    <label class="form-label" for="Price">$Price:</label>
+    <input class="form-control" type="text" id="Price" name="Price" value="<%=books.Price%>" required>
     </div>
 
-    <div>
-    <button type="submit">Save Changes</button>
+    <div class="col-3 row mt-3 mb-3">
+      <button class="btn btn-secondary" type="submit">Submit</button>
     </div>
 
-</form>
+  </form>
 
-<div>
+</div>
+
+<div class="container">
     <h5><a href="/books">Go To Books Page</a></h5>
 </div>
+
+<script>
+// Example starter JavaScript for disabling form submissions if there are invalid fields
+(function () {
+  'use strict'
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  var forms = document.querySelectorAll('.validated-form')
+
+  // Loop over them and prevent submission
+  Array.prototype.slice.call(forms)
+    .forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+
+        form.classList.add('was-validated')
+      }, false)
+    })
+})()
+</script>
