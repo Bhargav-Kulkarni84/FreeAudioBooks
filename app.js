@@ -38,6 +38,10 @@ app.get('/',(req,res)=>{
     res.render("home.ejs");
 })
 
+app.get('/test',(req,res)=>{
+    res.render("books/bootstrap.ejs");
+})
+
 app.get('/home',(req,res)=>{
     res.render("home.ejs");
 })

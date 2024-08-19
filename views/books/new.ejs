@@ -1,38 +1,44 @@
 <%layout('layouts/boilerplate')%>
 
-<form action="/books/new" method = "POST">
+<div class="container">
+    <form action="/books/new" method = "POST">
 
-    <div>
-    <label for="Title">Title:</label>
-    <input type="text" id="Title" name="Title" >
-    </div>
-    
-    <div>
-    <label for="Author">Authors:</label>
-    <input type="text" id="Author" name="Author">
-    </div>
-    
-    <div>
-    <label for="Year">Year_Of_Publication:</label>
-    <input type="text" id="Year" name="Year">
-    </div>
-    
-    <div>
-    <label for="Topic">Topic:</label>
-    <input type="text" id="Topic" name="Topic">
-    </div>
+            <div class="col-3 row mt-3 mb-3">
+                <label class="form-label" for="Title">Title:</label>
+                <input class="form-control" type="text" id="Title" name="Title" >
+            </div>
 
-    <div>
-    <label for="Price">$Price:</label>
-    <input type="text" id="Price" name="Price">
-    </div>
+            <div class="col-3 row mt-3 mb-3">
+                <label class="form-label" for="Image">Image URL:</label>
+                <input class="form-control" type="text" id="Image" name="Image" >
+            </div>
 
-    <div>
-    <button type="submit">Submit</button>
-    </div>
+            <div class="col-3 row mt-3 mb-3">
+                <label class="form-label" for="Author">Authors:</label>
+                <input class="form-control" type="text" id="Author" name="Author">
+            </div>
+            
+            <div class="col-3 row mt-3 mb-3">
+                <label class="form-label" for="Year">Year Published:</label>
+                <input class="form-control" type="text" id="Year" name="Year">
+            </div>
+            
+            <div class="col-3 row mt-3 mb-3 ">
+                <label class="form-label" for="Topic">Topic:</label>
+                <input class="form-control" type="text" id="Topic" name="Topic">
+            </div>
 
-</form>
+            <div class="col-3 row mt-3 mb-3">
+                <label class="form-label" for="Price">$Price:</label>
+                <input class="form-control" type="text" id="Price" name="Price">
+            </div>
 
-<div>
-    <h5><a href="/books">Go To Books Page</a></h5>
+            <button class="btn btn-secondary" type="submit">Submit</button>
+    </form>
 </div>
+       
+<div class="container">
+<h5><a href="/books">Go To Books Page</a></h5>
+
+</div>
+

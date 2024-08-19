@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const booksSchema = new Schema({
     Title:String,
+    Image:String,
     Author:String,
     Year_Of_Publication :Number,
     Topic : String,

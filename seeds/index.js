@@ -15,10 +15,11 @@ db.once("open", () => {
 });
 
 const seedDB = async()=>{
-    await booksSchema.deleteMany({});
+    await bookModel.deleteMany({});
     for(let i = 0;i<books.length;i++){
         const newBook = new bookModel({
             Title:`${books[i].Title}`,
+            Image: `https://picsum.photos/400?random=${i}`,
             Author:`${books[i].Author}`,
             Year_Of_Publication :`${books[i].Year_Of_Publication}`,
             Topic : `${books[i].Topic}`,
