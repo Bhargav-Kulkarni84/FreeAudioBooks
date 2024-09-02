@@ -1,37 +1,55 @@
 <%layout('layouts/boilerplate')%>
 
-<div class="container">
-
-  <form action="/books/edit/<%=books.id%>?_method=PUT" method="POST">
+<div class="container offset-4" >
+  <h2 class="container">Edit</h2>
+  <form action="/books/edit/<%=books.id%>?_method=PUT" method="POST" novalidate class="validated-form">
     
     <div class="col-3 row mt-3 mb-3">
-    <label class="form-label" for="Title">Title:</label>
-    <input class="form-control" type="text" id="Title" name="Title" value="<%=books.Title%>" required >
+      <label class="form-label" for="Title">Title:</label>
+      <input class="form-control" type="text" id="Title" name="Title" value="<%=books.Title%>" required >
+        <div class="valid-feedback">
+          Looks Good!
+        </div>
     </div>
     
     <div class="col-3 row mt-3 mb-3">
-    <label class="form-label" for="Image">Image URL:</label>
-    <input class="form-control" type="text" id="Image" name="Image" value="<%=books.Image%>" required>
-    </div>
-
-    <div class="col-3 row mt-3 mb-3">
-    <label class="form-label" for="Author">Authors:</label>
-    <input class="form-control" type="text" id="Author" name="Author" value="<%=books.Author%>" required>
-    </div>
-    
-    <div class="col-3 row mt-3 mb-3">
-    <label class="form-label" for="Year">Year_Of_Publication:</label>
-    <input class="form-control" type="text" id="Year" name="Year" value="<%=books.Year_Of_Publication%>" required>
-    </div>
-    
-    <div class="col-3 row mt-3 mb-3">
-    <label class="form-label" for="Topic">Topic:</label>
-    <input class="form-control" type="text" id="Topic" name="Topic" value="<%=books.Topic%>" required>
+      <label class="form-label" for="Image">Image URL:</label>
+      <input class="form-control" type="text" id="Image" name="Image" value="<%=books.Image%>" required>
+        <div class="valid-feedback">
+          Looks Good!
+        </div>
     </div>
 
     <div class="col-3 row mt-3 mb-3">
-    <label class="form-label" for="Price">$Price:</label>
-    <input class="form-control" type="text" id="Price" name="Price" value="<%=books.Price%>" required>
+      <label class="form-label" for="Author">Authors:</label>
+      <input class="form-control" type="text" id="Author" name="Author" value="<%=books.Author%>" required>
+        <div class="valid-feedback">
+          Looks Good!
+        </div>
+    </div>
+    
+    <div class="col-3 row mt-3 mb-3">
+      <label class="form-label" for="Year">Year_Of_Publication:</label>
+      <input class="form-control" type="text" id="Year" name="Year" value="<%=books.Year_Of_Publication%>" required>
+        <div class="valid-feedback">
+          Looks Good!
+      </div>
+    </div>
+    
+    <div class="col-3 row mt-3 mb-3">
+      <label class="form-label" for="Topic">Topic:</label>
+      <input class="form-control" type="text" id="Topic" name="Topic" value="<%=books.Topic%>" required>
+        <div class="valid-feedback">
+        Looks Good!
+      </div>
+    </div>
+
+    <div class="col-3 row mt-3 mb-3">
+      <label class="form-label" for="Price">$Price:</label>
+      <input class="form-control" type="text" id="Price" name="Price" value="<%=books.Price%>" required>
+        <div class="valid-feedback">
+        Looks Good!
+      </div>
     </div>
 
     <div class="col-3 row mt-3 mb-3">

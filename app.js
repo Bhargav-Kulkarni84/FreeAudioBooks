@@ -4,8 +4,16 @@ const app = express();
 const path = require('path');
 const mongoose = require('mongoose');
 const ejsMate = require('ejs-mate');
+
 const bookModel = require('./models/booksSchema');
+const Joi = require('joi');
+
 const methodOverride = require('method-override');
+
+const ExpressError = require('./utils/ExpressError');
+const catchAsync = require('./utils/catchAsynch');
+
+
 
 //Database Connection
 mongoose.connect('mongodb://localhost:27017/Books_List', {
@@ -23,14 +31,33 @@ db.once("open", () => {
 //Sever and Templationg Engine connection.
 app.engine('ejs', ejsMate)
 app.set('view engine','ejs');
-// app.set('views',path.join(__dirname,"FreeAudioBooks"));
-
-// app.set('views',path.join(__dirname));
 app.set('views', path.join(__dirname, 'views'))
 
 // Used for rendering form data it will parse the content encoded in the url
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
+
+//Middleware for data validation
+
+const validateCampground = (req,res,next)=>{
+    const booksSchema = Joi.object({
+        Title:Joi.string().required(),
+        Image:Joi.string().required(),
+        Author:Joi.string().required(),
+        Year_Of_Publication :Joi.number().min(0).required(),
+        Topic : Joi.string().required(),
+        Price : Joi.number().min(0).required()
+    })
+
+    const {error} = booksSchema.validate(req.body);
+    if(error){
+        const msg = error.details.map(el=>el.message).join(',')
+        throw new ExpressError(msg,400);
+    }
+    else{
+        next();
+    }
+}
 
 //get routes
 
@@ -55,18 +82,21 @@ app.get('/books/new',async(req,res)=>{
     res.render('books/new');
 })
     
-app.get('/books/edit/:id',async(req,res)=>{
+app.get('/books/edit/:id',catchAsync(async(req,res)=>{
     const id = req.params.id;
-    // const {id} = req.params;
     const books = await bookModel.findById(id);
     res.render('books/edit',{books});   
-})
+}))
+
+app.get('/books/:id',catchAsync(async(req,res)=>{
+    const books = await bookModel.findById(req.params.id);
+    res.render('books/show',{books});
+}))
 
 //Put Routes
 
-app.put('/books/edit/:id',async(req,res)=>{
-    // const id = req.params.id; 
-    console.log("Post Route");
+app.put('/books/edit/:id',validateCampground,catchAsync(async(req,res,next)=>{
+        console.log("Post Route");
     const {id} = req.params;
     const {Title,Author,Year,Topic,Price} = req.body;
    const book = await bookModel.findByIdAndUpdate(id,{
@@ -77,41 +107,77 @@ app.put('/books/edit/:id',async(req,res)=>{
         Price
     });
     res.redirect(`/books/${book._id}`);
-});
+}));
 
 // Post routes
 
-app.post('/books/new',async(req,res)=>{
-    const body = req.body;
-    // res.redirect(`/books/data?Title=${body.title}&Author=${body.Author}&Year=${body.Year}&Topic=${body.Topic}&Price=${body.Price}`) //sending data in terms of query string.
-    // res.render('books/data', { Title: body.Title, Author: body.Author, Year: body.Year, Topic: body.Topic, Price: body.Price }); //sending data as the body.
-    //Adding the new books to the database
+app.post('/books/new',validateCampground,catchAsync(async(req,res,next)=>{
+    
+    // //Adding the new books to the database
+    // //     throw new ExpressError("Fill The Form Data Please",404);
+    // // }
+
+    // //Defining booksSchema
+    // const booksSchema = Joi.object({
+    //         Title:Joi.string().required(),
+    // // if(!req.body.Title){
+    //         Image:Joi.string().required(),
+    //         Author:Joi.string().required(),
+    //         Year_Of_Publication :Joi.number().min(0).required(),
+    //         Topic : Joi.string().required(),
+    //         Price : Joi.number().min(0).required()
+    // })
+
+    // //Passing the data through our joi schema for validation.
+
+    // // const result = booksSchema.validate(req.body)
+    // // console.log(result);
+    
+    // const {error} = booksSchema.validate(req.body) //Syntax .validate comes from joi schema syntax.
+    
+    // if(error){
+    //     //It will just structure it.
+    //     const msg = error.details.map(el=>el.message).join(',') 
+    //     throw new ExpressError(msg,400)
+    // }
+    //     console.log(result);
 
     const {Title,Author,Year,Topic,Price} = req.body;
     const newBook = new bookModel({
             Title,
             Author,
-            Year_Of_Publication:`${Year}`,
+            Year_Of_Publication:Year,
             Topic,
             Price
     })
-    newBook.save();
+    await newBook.save();
     res.redirect('/books');
-})
+}))
 
 //Delete Routes
 
-app.delete('/books/:id', async (req, res) => {
+app.delete('/books/:id', catchAsync(async (req, res) => {
     const id = req.params.id;
     await bookModel.findByIdAndDelete(id);
     res.redirect('/books');
-});
+}));
 
-app.get('/books/:id',async(req,res)=>{
 
-    const books = await bookModel.findById(req.params.id);
-    // res.render('books/show',{books});
-    res.render('books/show',{books});
+app.all('*',(req,res,next)=>{
+    // res.send("404!!!");
+    next(new ExpressError("Page Not Found",404))
+})
+
+//Error Handeling Route
+app.use((err,req,res,next)=>{
+    // res.send("Handeled Error");
+    // const {statusCode=500 , message="Hanndeled Error"} = err
+    // res.status(statusCode).send(message);
+    const {statusCode=500} = err;
+    if(!err.message){
+        err.message="Oh No, Something went wrong!";
+    }
+    res.status(statusCode).render('error',{err});
 })
 
 //Connection to the server
