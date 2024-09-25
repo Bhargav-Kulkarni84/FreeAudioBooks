@@ -1,23 +1,15 @@
-<%layout('/layouts/boilerplate')%>
-
+<% layout('layouts/boilerplate') %>
 
 <div class="container mt-3">
-    
-<h3 class="mb-3">Titles of the books:</h3>
+  <h3 class="mb-4">Titles of the Books:</h3>
 
-<ol>
-    
-    <%for(let i=0;i<books.length;i++){ %>
-            
-            <h4 class="mb-3">
-                <li>
-                    <!-- <h4><a href="<%=books[i].Title %>"></a></h4> -->
-                    <% const id = books[i].id %>
-                    <a href="/books/<%=id%>"><h4 class="mb-3"><%=books[i].Title %></h4></a>
-                </li>
-            </h4>
-    
-    <%}%>
-    
-</ol>
+  <ul class="list-group">
+    <% books.forEach((book, index) => { %>
+      <li class="list-group-item mb-2">
+        <a href="/books/<%= book._id %>" class="text-decoration-none">
+          <h4 class="mb-0"><%= index + 1 %>. <%= book.Title %></h4>
+        </a>
+      </li>
+    <% }) %>
+  </ul>
 </div>

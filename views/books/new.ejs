@@ -1,44 +1,55 @@
-<%layout('layouts/boilerplate')%>
+<% layout('layouts/boilerplate') %>
 
-<div class="container offset-3">
-    <form action="/books/new" method = "POST" novalidate class="validated-form">
+<div class="container mt-4">
+  <h2 class="mb-4">Add a New Book</h2>
+  
+  <form action="/books/new" method="POST" novalidate class="validated-form">
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label class="form-label" for="Title">Title:</label>
+        <input class="form-control" type="text" id="Title" name="Title" required>
+      </div>
+    </div>
 
-            <div class="col-3 row mt-3 mb-3">
-                <label class="form-label" for="Title">Title:</label>
-                <input class="form-control" type="text" id="Title" name="Title" >
-            </div>
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label class="form-label" for="Image">Image URL:</label>
+        <input class="form-control" type="text" id="Image" name="Image" required>
+      </div>
+    </div>
 
-            <div class="col-3 row mt-3 mb-3">
-                <label class="form-label" for="Image">Image URL:</label>
-                <input class="form-control" type="text" id="Image" name="Image" >
-            </div>
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label class="form-label" for="Author">Author(s):</label>
+        <input class="form-control" type="text" id="Author" name="Author" required>
+      </div>
+    </div>
 
-            <div class="col-3 row mt-3 mb-3">
-                <label class="form-label" for="Author">Authors:</label>
-                <input class="form-control" type="text" id="Author" name="Author">
-            </div>
-            
-            <div class="col-3 row mt-3 mb-3">
-                <label class="form-label" for="Year">Year Published:</label>
-                <input class="form-control" type="text" id="Year" name="Year">
-            </div>
-            
-            <div class="col-3 row mt-3 mb-3 ">
-                <label class="form-label" for="Topic">Topic:</label>
-                <input class="form-control" type="text" id="Topic" name="Topic">
-            </div>
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label class="form-label" for="Year">Year Published:</label>
+        <input class="form-control" type="text" id="Year" name="Year" required>
+      </div>
+    </div>
 
-            <div class="col-3 row mt-3 mb-3">
-                <label class="form-label" for="Price">$Price:</label>
-                <input class="form-control" type="text" id="Price" name="Price">
-            </div>
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label class="form-label" for="Topic">Topic:</label>
+        <input class="form-control" type="text" id="Topic" name="Topic" required>
+      </div>
+    </div>
 
-            <button class="btn btn-secondary" type="submit">Submit</button>
-    </form>
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label class="form-label" for="Price">Price:</label>
+        <input class="form-control" type="text" id="Price" name="Price" required>
+      </div>
+    </div>
+
+    <button class="btn btn-primary" type="submit">Submit</button>
+  </form>
 </div>
-       
-<div class="container">
-<h5><a href="/books">Go To Books Page</a></h5>
 
+<div class="container mt-4">
+  <h5><a href="/books" class="btn btn-link">Go To Books Page</a></h5>
 </div>
-
