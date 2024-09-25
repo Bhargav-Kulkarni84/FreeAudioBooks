@@ -1,70 +1,100 @@
-<%layout('layouts/boilerplate')%>
+<% layout('layouts/boilerplate') %>
 
-<div class="container">
-
-  <form action="/books/edit/<%=books.id%>?_method=PUT" method="POST">
+<div class="container mt-4">
+  <h2 class="mb-4">Edit Book</h2>
+  <form action="/books/edit/<%= books._id %>?_method=PUT" method="POST" novalidate class="validated-form">
     
-    <div class="col-3 row mt-3 mb-3">
-    <label class="form-label" for="Title">Title:</label>
-    <input class="form-control" type="text" id="Title" name="Title" value="<%=books.Title%>" required >
-    </div>
-    
-    <div class="col-3 row mt-3 mb-3">
-    <label class="form-label" for="Image">Image URL:</label>
-    <input class="form-control" type="text" id="Image" name="Image" value="<%=books.Image%>" required>
-    </div>
-
-    <div class="col-3 row mt-3 mb-3">
-    <label class="form-label" for="Author">Authors:</label>
-    <input class="form-control" type="text" id="Author" name="Author" value="<%=books.Author%>" required>
-    </div>
-    
-    <div class="col-3 row mt-3 mb-3">
-    <label class="form-label" for="Year">Year_Of_Publication:</label>
-    <input class="form-control" type="text" id="Year" name="Year" value="<%=books.Year_Of_Publication%>" required>
-    </div>
-    
-    <div class="col-3 row mt-3 mb-3">
-    <label class="form-label" for="Topic">Topic:</label>
-    <input class="form-control" type="text" id="Topic" name="Topic" value="<%=books.Topic%>" required>
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label class="form-label" for="Title">Title:</label>
+        <input class="form-control" type="text" id="Title" name="Title" value="<%= books.Title %>" required>
+        <div class="valid-feedback">
+          Looks good!
+        </div>
+      </div>
     </div>
 
-    <div class="col-3 row mt-3 mb-3">
-    <label class="form-label" for="Price">$Price:</label>
-    <input class="form-control" type="text" id="Price" name="Price" value="<%=books.Price%>" required>
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label class="form-label" for="Image">Image URL:</label>
+        <input class="form-control" type="text" id="Image" name="Image" value="<%= books.Image %>" required>
+        <div class="valid-feedback">
+          Looks good!
+        </div>
+      </div>
     </div>
 
-    <div class="col-3 row mt-3 mb-3">
-      <button class="btn btn-secondary" type="submit">Submit</button>
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label class="form-label" for="Author">Author:</label>
+        <input class="form-control" type="text" id="Author" name="Author" value="<%= books.Author %>" required>
+        <div class="valid-feedback">
+          Looks good!
+        </div>
+      </div>
     </div>
 
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label class="form-label" for="Year">Year of Publication:</label>
+        <input class="form-control" type="number" id="Year" name="Year" value="<%= books.Year_Of_Publication %>" required>
+        <div class="valid-feedback">
+          Looks good!
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <label class="form-label" for="Topic">Topic:</label>
+        <input class="form-control" type="text" id="Topic" name="Topic" value="<%= books.Topic %>" required>
+        <div class="valid-feedback">
+          Looks good!
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-4">
+      <div class="col-md-6">
+        <label class="form-label" for="Price">Price:</label>
+        <input class="form-control" type="number" step="0.01" id="Price" name="Price" value="<%= books.Price %>" required>
+        <div class="valid-feedback">
+          Looks good!
+        </div>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-md-6">
+        <button class="btn btn-primary" type="submit">Submit</button>
+      </div>
+    </div>
   </form>
 
-</div>
-
-<div class="container">
-    <h5><a href="/books">Go To Books Page</a></h5>
+  <div class="mt-4">
+    <h5><a class="btn btn-link" href="/books">Go To Books Page</a></h5>
+  </div>
 </div>
 
 <script>
-// Example starter JavaScript for disabling form submissions if there are invalid fields
-(function () {
-  'use strict'
+  // Example starter JavaScript for disabling form submissions if there are invalid fields
+  (function () {
+    'use strict';
 
-  // Fetch all the forms we want to apply custom Bootstrap validation styles to
-  var forms = document.querySelectorAll('.validated-form')
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.querySelectorAll('.validated-form');
 
-  // Loop over them and prevent submission
-  Array.prototype.slice.call(forms)
-    .forEach(function (form) {
-      form.addEventListener('submit', function (event) {
-        if (!form.checkValidity()) {
-          event.preventDefault()
-          event.stopPropagation()
-        }
+    // Loop over them and prevent submission
+    Array.prototype.slice.call(forms)
+      .forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+          if (!form.checkValidity()) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
 
-        form.classList.add('was-validated')
-      }, false)
-    })
-})()
+          form.classList.add('was-validated');
+        }, false);
+      });
+  })();
 </script>
