@@ -1,8 +1,9 @@
 
 // // function catchAsync(fn){
-// //     return function catcher(req,res,next){
+// //     function catcher(req,res,next){
 // //         fn(req,res,next).catch(function(e){next(e)});
 // //     }
+// //       return catcher    
 // // }
 // // module.exports = catchAsync(fn);
 
