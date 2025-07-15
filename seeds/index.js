@@ -2,16 +2,14 @@ const mongoose = require('mongoose');
 const books = require("./books");
 const bookModel = require("../models/booksSchema");
 
-mongoose.connect('mongodb://localhost:27017/Books_List', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true
-});
-
-const db = mongoose.connection;
-
-db.on("error", console.error.bind(console, "connection error:"));
-db.once("open", () => {
-    console.log("Database connected");
+// mongoose.connect('mongodb://localhost:27017/Books_List', {
+const {MongoDB_URL} = require('../config');
+mongoose.connect(MongoDB_URL)
+.then(() => {
+    console.log("Database Connection Succesful");
+})
+.catch(err => {
+    console.error("Database Connection Error:", err);
 });
 
 const seedDB = async()=>{
